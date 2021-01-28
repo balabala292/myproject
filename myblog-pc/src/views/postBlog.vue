@@ -38,9 +38,9 @@ export default {
             userId: loginUser.user_id,
           })
           .then((res) => {
-            let { state,comment } = res.data;
+            let { state } = res.data;
             if (state == "success") {
-              this.$store.commit('storeBlogDetail', blog);
+              
               this.$router.push("/");
             } else {
               alert("发表文章失败!");

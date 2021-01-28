@@ -2,6 +2,7 @@
   <div class="container">
     <div class="blog">
       <div class="blog-title">
+        <h3>{{ blog && blog.blog_id }}</h3>
         <h3>{{ blog && blog.title }}</h3>
         <span>{{ blog && blog.post_time }}</span>
       </div>
@@ -17,7 +18,7 @@
       </div>
     </div>
     <button>
-      <router-link to="/remark">评论</router-link>
+      <router-link :to="{ path: '/remark/' + blog.blog_id }">评论</router-link>
     </button>
   </div>
    
@@ -27,7 +28,7 @@ export default {
   data() {
     return {
       blog: null,
-      content:''
+      
     };
   },
   created() {
@@ -47,6 +48,7 @@ export default {
         .then((res) => {
           let { state, blog } = res.data;
           if (state == "success") {
+            this.$store.commit('storeBlogDetail', blog);
             this.blog = blog;
           }
         })

@@ -30,7 +30,7 @@ const routes = [
     component: PostBlog
   },
   {
-    path: '/remark',
+    path: '/remark/:blogId',
     name: 'Remark',
     component: Remark
   },
