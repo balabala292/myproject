@@ -2,8 +2,8 @@ const blogModel = require("../models/blogModel");
 
 module.exports = {
   postBlog: async function (ctx, next) {
-    let { title, content, userId } = ctx.request.body;
-    let results = await blogModel.saveBlog(title, content, userId);
+    let { title, content, userId,info } = ctx.request.body;
+    let results = await blogModel.saveBlog(title, content, userId,info);
     if (results.insertId > 0) {
       ctx.body = {
         state: "success",
@@ -54,5 +54,26 @@ module.exports = {
       }
     }
   }, 
+  async searchBlogList(ctx) {
+    let { title } = ctx.query;
+    if (title != '') {
+      let results = await blogModel.getTheBlogsByTitle(title);
+      if (results.length > 0 && results[0] != '') {
+        
+        ctx.body = {
+          state: "success",
+          blogs: results,
+        };
+      } else {
+        ctx.body = {
+          state: "fail",
+        }
+      }
+    } else {
+      ctx.body = {
+        state: "fail",
+      }
+    }
+  },
 
 };

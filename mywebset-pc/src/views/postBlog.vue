@@ -8,15 +8,15 @@
     <p>标题：</p>
     <input type="text" v-model="title" class="text" />
     <p>
+      简介：
+    </p>
+    <textarea cols="50" rows="10" v-model="info" class="text"></textarea>
+    <p>
       内容：
     </p>
-    <textarea
-        name=""
-        id=""
-        cols="100"
-        rows="50"
-        v-model="content"
-      class="text"></textarea>
+    
+    <editor v-model="content"></editor>
+  
     <!-- <input type="hidden" value="5"> -->
     <p>
       <button @click="postBlog" class="btn">发表</button>
@@ -26,13 +26,19 @@
 
 <script>
 
+import editor from './Editor'
+
+
 export default {
-  
+  components: { editor },
+ 
+  name:"index",
   data() {
     return {
       title: "",
       content: "",
-      imgSrc:require('../images/1200106635d0f186f62877257fb3607a.jpg')
+      info:"",
+      imgSrc:require('../images/aaa773e8cc9729977037e80b19f95589.jpg')
     };
   },
   created() {},
@@ -44,6 +50,7 @@ export default {
           .post("/blog/post", {
             title: this.title,
             content: this.content,
+            info:this.info,
             userId: loginUser.user_id,
           })
           .then((res) => {
@@ -78,10 +85,10 @@ export default {
   position:fixed;
 }
 h1{
-  color:azure;
+  color:cornflowerblue
 }
 p{
-  color: antiquewhite;
+  color:brown;
 }
 .text{
   opacity: 0.8;

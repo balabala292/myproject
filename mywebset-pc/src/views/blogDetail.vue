@@ -24,9 +24,17 @@
         </div>
       </div>
     </div>
-    <button class="btn">
-      <router-link :to="{ path: '/remark/' + blog.blog_id }">评论</router-link>
+    <button class="btn" @click="showComment">
+      评论
     </button>
+    <div v-show="isShow">
+     <p>
+      <textarea cols="100" rows="50" v-model="content" class="text"></textarea>
+    </p>
+     <button @click="postComment" class="btn">
+      提交
+    </button>
+      </div>
      <button class="btn">
       <router-link :to="{ path: '/'  }">返回</router-link>
     </button>
@@ -38,7 +46,9 @@ export default {
   data() {
     return {
       blog: null,
-      imgSrc:require('../images/225152-15587959120fa3.jpg')
+      imgSrc:require('../images/225152-15587959120fa3.jpg'),
+      isShow:false,
+      content: "",
       
     };
   },
@@ -46,6 +56,14 @@ export default {
     this.getBlogDetail();
   },
   methods: {
+    showComment(){
+              this.isShow = !this.isShow;
+              if(this.isShow){
+                  this.message='隐藏';
+                 }else{
+                  this.message='显示';
+                 }
+               },
     getBlogDetail() {
       let blogId = this.$route.params.blogId;
       
@@ -68,6 +86,29 @@ export default {
         //   this.$router.push("/login");
         // });
     },
+    postComment() {
+      let blogId = this.$route.params.blogId;
+      let loginUser = this.$store.state.loginUser;
+      if (loginUser) {
+        this.$http
+          .post("/comment/post", {
+            content: this.content,
+            blogId: blogId,
+            userId: loginUser.user_id
+          })
+          .then(res => {
+            let { state } = res.data;
+            if (state == "success") {
+              this.$router.push("/index/");
+            } else {
+              alert("发表评论失败!");
+            }
+          });
+      } else {
+        alert("请先登录!");
+        this.$router.push("/login");
+      }
+    }
     
 }
 }
@@ -95,6 +136,11 @@ export default {
 }
 .comment-info {
   float: right;
+}
+.text{
+  opacity: 0.5;
+  border-radius: 10px;
+  outline: none;
 }
 .background{
   width: 100%;

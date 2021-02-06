@@ -4,7 +4,7 @@ import Index from '../views/index.vue'
 import Login from '../views/login.vue'
 import BlogDetail from '../views/blogDetail.vue'
 import PostBlog from '../views/postBlog.vue'
-import Remark from '../views/remark.vue'
+import Search from '../views/search.vue'
 import Regist from '../views/regist.vue'
 import Info from '../views/info.vue'
 Vue.use(VueRouter)
@@ -31,9 +31,9 @@ const routes = [
     component: PostBlog
   },
   {
-    path: '/remark/:blogId',
-    name: 'Remark',
-    component: Remark
+    path: '/search/',
+    name: 'search',
+    component: Search
   },
   {
     path: '/regist',

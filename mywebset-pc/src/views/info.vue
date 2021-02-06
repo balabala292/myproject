@@ -40,7 +40,11 @@
             <button class="btn">
                   <router-link to="/index/">查看我的博客</router-link>
                 </button>
+                 <button class="btn">
+                  <router-link to="/search/">搜索我的博客</router-link>
+                </button>
         </div>
+        
         <div class="info">
             <div class="photo">
                 <img :src="photo" width="150px" height="150px" alt="" />
@@ -64,7 +68,7 @@ export default {
        return{
             imgSrc:require('../images/152234-1538292154f5cb.jpg'),
             photo:require('../images/1604714386360.jpeg'),
-            
+            search:"",
        }
     }
 }
@@ -124,9 +128,15 @@ export default {
   border: none;
   outline: none;
 }
+.btn1{
+    background-color:  #3794ff;
+     color: azure;
+}
 .btn a{
   text-decoration: none;
   color: azure;
 }
-
+.search{
+    margin-top: 20px;
+}
 </style>

@@ -13,11 +13,11 @@
      </button>
    </div>
     <app ></app>
-   
+  
     <button @click="goPostBlog" class="btn">发表文章</button>
     <div class="blog-list">
       
-      <div class="blog" v-for="item in blogList" :key="item.blog_id">
+      <div class="blog" v-for="item in showList" :key="item.blog_id">
         
         <h3 class="blog-title">
           <!-- <a href="/blog/detail/">{{item.title}}</a> -->
@@ -25,9 +25,10 @@
             item.title
           }}</router-link>
         </h3>
-        <p class="blog-content">{{ item.content }}</p>
+        <p class="blog-info">简介：{{ item.info }}</p>
         <span class="post-time">{{ item.postTime }}</span>
       </div>
+      <div @click="showAll = !showAll" class="show-more">{{word}}</div>
     </div>
   </div>
 </template>
@@ -42,13 +43,40 @@ export default {
 		},
   data() {
     return {
-      blogList: [],
+      blogList: {},
       imgSrc:require('../images/232537-1601306737da14.jpg'),
-      
+      showAll:false,
     };
   },
   created() {
     this.getData();
+  },
+  computed:{
+    showList(){
+      
+      if(this.showAll == false){
+        var showList = [];
+        if(this.blogList.length>5){                    //当数据不需要完全显示的时候
+        for(var i=0;i<5;i++){
+         
+           showList.push(this.blogList[i]);
+          }
+        }else{
+          showList = this.blogList;
+        }
+        return showList;
+        }
+        else{
+        return this.blogList;
+      }
+    },
+    word(){
+      if(this.showAll == false){
+      return '点击展开'
+      }else{
+        return '点击收起'
+      }
+    }
   },
   methods: {
     getData() {
@@ -83,8 +111,9 @@ export default {
   padding: 20px;
   margin: 20px 0;
 }
-.link{
-  
+.btn1{
+  background-color:  #3794ff;
+  color: azure;
 }
 .link button{
   width: 5%;
